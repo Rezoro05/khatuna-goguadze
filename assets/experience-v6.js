@@ -21,8 +21,6 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 function playHeroEntrance() {
   if (reduceMotion) return;
   const copy = [...document.querySelectorAll('.hero-copy > .eyebrow, .hero-copy > h1, .hero-copy > .lede, .hero-actions, .trust-note')];
-  const visual = document.querySelector('.hero-visual');
-  const cards = [...document.querySelectorAll('.floating-card')];
 
   copy.forEach((element, index) => {
     element.animate([
@@ -31,17 +29,6 @@ function playHeroEntrance() {
     ], { duration: 1350, delay: 180 + index * 360, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'both' });
   });
 
-  visual?.animate([
-    { opacity: 0, transform: 'translate3d(70px,24px,0) scale(.88)' },
-    { opacity: 1, transform: 'translate3d(0,0,0) scale(1)' }
-  ], { duration: 2600, delay: 600, easing: 'cubic-bezier(.16,1,.3,1)' });
-
-  cards.forEach((element, index) => {
-    element.animate([
-      { opacity: 0, transform: 'translateY(28px) scale(.86)' },
-      { opacity: 1, transform: 'translateY(0) scale(1)' }
-    ], { duration: 1500, delay: 2500 + index * 500, easing: 'cubic-bezier(.34,1.56,.64,1)' });
-  });
 }
 
 if (document.querySelector('.hero')) playHeroEntrance();
@@ -69,7 +56,7 @@ function initNeuralField() {
   };
 
   const buildNetwork = () => {
-    const count = width < 420 ? 44 : 68;
+    const count = width < 420 ? 58 : 92;
     nodes = Array.from({ length: count }, (_, index) => {
       const angle = seeded(index + 1) * Math.PI * 2;
       const radiusX = Math.sqrt(seeded(index + 11)) * width * .38;
@@ -78,7 +65,7 @@ function initNeuralField() {
         x: width * .52 + Math.cos(angle) * radiusX,
         y: height * .48 + Math.sin(angle) * radiusY,
         phase: seeded(index + 71) * Math.PI * 2,
-        size: 1.2 + seeded(index + 91) * 2.2
+        size: .9 + seeded(index + 91) * 1.6
       };
     }).filter((node) => node.x > width * .13 && node.x < width * .9 && node.y > height * .14 && node.y < height * .84);
 
@@ -88,9 +75,9 @@ function initNeuralField() {
         .map((other, otherIndex) => ({ otherIndex, distance: Math.hypot(node.x - other.x, node.y - other.y) }))
         .filter((entry) => entry.otherIndex !== index)
         .sort((a, b) => a.distance - b.distance)
-        .slice(0, 2);
+        .slice(0, 3);
       nearest.forEach((entry) => {
-        if (entry.distance < width * .19 && index < entry.otherIndex) links.push([index, entry.otherIndex]);
+        if (entry.distance < width * .22 && index < entry.otherIndex) links.push([index, entry.otherIndex]);
       });
     });
   };
@@ -109,7 +96,7 @@ function initNeuralField() {
   const influenceAt = (x, y) => {
     if (!pointer.active && pointer.strength < .01) return 0;
     const distance = Math.hypot(x - pointer.x, y - pointer.y);
-    return Math.max(0, 1 - distance / Math.max(135, width * .31)) * pointer.strength;
+    return Math.max(0, 1 - distance / Math.max(150, width * .36)) * pointer.strength;
   };
 
   const draw = (time) => {
@@ -124,24 +111,52 @@ function initNeuralField() {
       context.beginPath();
       context.moveTo(from.x, from.y);
       context.lineTo(to.x, to.y);
-      context.strokeStyle = `rgba(238, 101, 63, ${.1 + influence * .78})`;
-      context.lineWidth = .65 + influence * 2.15;
-      context.shadowBlur = influence * 18;
-      context.shadowColor = '#f26d47';
+      context.strokeStyle = `rgba(221, 87, 58, ${.035 + influence * .62})`;
+      context.lineWidth = .55 + influence * 1.25;
+      context.shadowBlur = influence * 12;
+      context.shadowColor = '#e85e3d';
       context.stroke();
     });
 
     nodes.forEach((node) => {
       const influence = influenceAt(node.x, node.y);
-      const ambient = .18 + Math.sin(time * .0018 + node.phase) * .06;
-      const radius = node.size + influence * 3.8;
+      const ambient = .1 + Math.sin(time * .0018 + node.phase) * .035;
+      const radius = node.size + influence * 2.8;
       context.beginPath();
       context.arc(node.x, node.y, radius, 0, Math.PI * 2);
-      context.fillStyle = `rgba(255, 177, 128, ${ambient + influence * .82})`;
-      context.shadowBlur = 4 + influence * 30;
-      context.shadowColor = influence > .1 ? '#ff744d' : '#f5aa7b';
+      context.fillStyle = `rgba(238, 112, 76, ${ambient + influence * .85})`;
+      context.shadowBlur = 3 + influence * 24;
+      context.shadowColor = influence > .1 ? '#ef6a47' : '#ed9b78';
       context.fill();
     });
+
+    if (pointer.strength > .02) {
+      const hubLinks = nodes
+        .map((node, index) => ({ index, distance: Math.hypot(node.x - pointer.x, node.y - pointer.y) }))
+        .filter((entry) => entry.distance < Math.max(170, width * .34))
+        .sort((a, b) => a.distance - b.distance)
+        .slice(0, width < 420 ? 7 : 11);
+
+      hubLinks.forEach((entry) => {
+        const node = nodes[entry.index];
+        const strength = Math.max(0, 1 - entry.distance / Math.max(170, width * .34)) * pointer.strength;
+        context.beginPath();
+        context.moveTo(pointer.x, pointer.y);
+        context.lineTo(node.x, node.y);
+        context.strokeStyle = `rgba(218, 74, 48, ${.18 + strength * .72})`;
+        context.lineWidth = .7 + strength * 1.25;
+        context.shadowBlur = strength * 14;
+        context.shadowColor = '#ed5b3b';
+        context.stroke();
+      });
+
+      context.beginPath();
+      context.arc(pointer.x, pointer.y, 3.5 + pointer.strength * 3.2, 0, Math.PI * 2);
+      context.fillStyle = `rgba(225, 78, 48, ${.25 + pointer.strength * .7})`;
+      context.shadowBlur = 22 * pointer.strength;
+      context.shadowColor = '#f05b3b';
+      context.fill();
+    }
 
     context.shadowBlur = 0;
     frame = requestAnimationFrame(draw);
