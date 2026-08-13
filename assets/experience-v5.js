@@ -124,10 +124,10 @@ function initNeuralField() {
       context.beginPath();
       context.moveTo(from.x, from.y);
       context.lineTo(to.x, to.y);
-      context.strokeStyle = `rgba(77, 230, 241, ${.07 + influence * .68})`;
-      context.lineWidth = .6 + influence * 1.8;
-      context.shadowBlur = influence * 16;
-      context.shadowColor = '#32e7f4';
+      context.strokeStyle = `rgba(238, 101, 63, ${.1 + influence * .78})`;
+      context.lineWidth = .65 + influence * 2.15;
+      context.shadowBlur = influence * 18;
+      context.shadowColor = '#f26d47';
       context.stroke();
     });
 
@@ -137,9 +137,9 @@ function initNeuralField() {
       const radius = node.size + influence * 3.8;
       context.beginPath();
       context.arc(node.x, node.y, radius, 0, Math.PI * 2);
-      context.fillStyle = `rgba(225, 254, 255, ${ambient + influence * .82})`;
-      context.shadowBlur = 4 + influence * 28;
-      context.shadowColor = influence > .1 ? '#32e7f4' : '#ffffff';
+      context.fillStyle = `rgba(255, 177, 128, ${ambient + influence * .82})`;
+      context.shadowBlur = 4 + influence * 30;
+      context.shadowColor = influence > .1 ? '#ff744d' : '#f5aa7b';
       context.fill();
     });
 
