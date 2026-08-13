@@ -28,19 +28,19 @@ function playHeroEntrance() {
     element.animate([
       { opacity: 0, transform: 'translateY(38px)' },
       { opacity: 1, transform: 'translateY(0)' }
-    ], { duration: 720, delay: 100 + index * 105, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'both' });
+    ], { duration: 1350, delay: 180 + index * 360, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'both' });
   });
 
   visual?.animate([
     { opacity: 0, transform: 'translate3d(70px,24px,0) scale(.88)' },
     { opacity: 1, transform: 'translate3d(0,0,0) scale(1)' }
-  ], { duration: 1200, delay: 240, easing: 'cubic-bezier(.16,1,.3,1)' });
+  ], { duration: 2600, delay: 600, easing: 'cubic-bezier(.16,1,.3,1)' });
 
   cards.forEach((element, index) => {
     element.animate([
       { opacity: 0, transform: 'translateY(28px) scale(.86)' },
       { opacity: 1, transform: 'translateY(0) scale(1)' }
-    ], { duration: 760, delay: 700 + index * 180, easing: 'cubic-bezier(.34,1.56,.64,1)' });
+    ], { duration: 1500, delay: 2500 + index * 500, easing: 'cubic-bezier(.34,1.56,.64,1)' });
   });
 }
 
