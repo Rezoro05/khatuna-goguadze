@@ -1,28 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-<loc>https://khatuna-goguadze.rezoro.chatgpt.site</loc>
-<changefreq>weekly</changefreq>
-<priority>1</priority>
-</url>
-<url>
-<loc>https://khatuna-goguadze.rezoro.chatgpt.site/about</loc>
-<changefreq>monthly</changefreq>
-<priority>0.8</priority>
-</url>
-<url>
-<loc>https://khatuna-goguadze.rezoro.chatgpt.site/projects/kaikona-neuroeducation</loc>
-<changefreq>monthly</changefreq>
-<priority>0.7</priority>
-</url>
-<url>
-<loc>https://khatuna-goguadze.rezoro.chatgpt.site/projects/architect-of-your-brain</loc>
-<changefreq>monthly</changefreq>
-<priority>0.7</priority>
-</url>
-<url>
-<loc>https://khatuna-goguadze.rezoro.chatgpt.site/projects/individualized-learning-plans</loc>
-<changefreq>monthly</changefreq>
-<priority>0.7</priority>
-</url>
+  <url><loc>https://rezoro05.github.io/khatuna-goguadze/</loc><priority>1.0</priority></url>
+  <url><loc>https://rezoro05.github.io/khatuna-goguadze/about/</loc><priority>0.8</priority></url>
+  <url><loc>https://rezoro05.github.io/khatuna-goguadze/projects/</loc><priority>0.8</priority></url>
+  <url><loc>https://rezoro05.github.io/khatuna-goguadze/projects/kaikona-neuroeducation/</loc><priority>0.7</priority></url>
+  <url><loc>https://rezoro05.github.io/khatuna-goguadze/projects/architect-of-your-brain/</loc><priority>0.7</priority></url>
+  <url><loc>https://rezoro05.github.io/khatuna-goguadze/projects/individualized-learning-plans/</loc><priority>0.7</priority></url>
 </urlset>
